@@ -66,7 +66,7 @@ app.get('/contact', async (req, res) => {
 
 // Serving Index file when front-end reloads
 app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, './front-end-app/build/index.html'));
+    res.sendFile(path.join(__dirname, './front-end/build/index.html'));
 });
 
 // Error Handler
