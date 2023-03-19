@@ -7,8 +7,8 @@ const fs = require('fs/promises');
 const HTMLParser = require('node-html-parser');
 const { JSDOM } = require("jsdom");
 
-const frontendBuildPath = path.join(__dirname, './front-end-app/build');
-const FRONT_END_FILE_INDEX = path.join(__dirname, './front-end-app/build/index.html');
+const frontendBuildPath = path.join(__dirname, './front-end/build');
+const FRONT_END_FILE_INDEX = path.join(__dirname, './front-end/build/index.html');
 // API route handler
 app.use('/api/v1', apiRouter);
 
