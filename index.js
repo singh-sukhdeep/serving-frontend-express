@@ -16,6 +16,14 @@ app.use('/api/v1', apiRouter);
 app.use(express.static(frontendBuildPath));
 
 
+app.use(function (req, res, next) {
+    res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self'; font-src 'self'; img-src 'self' https://res.cloudinary.com/; script-src 'self'; style-src 'self'; frame-src 'self'"
+    );
+    next();
+});
+
 function generateMetaTag(property, content) {
     const dom = new JSDOM();
     const metaTag = dom.window.document.createElement('meta');
@@ -34,6 +42,11 @@ function generateMetaTag(property, content) {
 app.get('/contact', async (req, res) => {
 
     try {
+
+        res.setHeader(
+            'Content-Security-Policy',
+            "default-src 'self'; font-src 'self'; img-src 'self' https://res.cloudinary.com/; script-src 'self'; style-src 'self'; frame-src 'self'"
+        );
         const file = await fs.readFile(FRONT_END_FILE_INDEX, 'utf8');
         const root = new JSDOM(file);
         const head = root.window.document.getElementsByTagName('head');
@@ -42,15 +55,12 @@ app.get('/contact', async (req, res) => {
         const tag2 = generateMetaTag('og:description', 'Some descriptiong about name sukhdeep singh');
         const tag3 = generateMetaTag('og:image', 'https://fastly.picsum.photos/id/885/200/200.jpg?hmac=RQ5YecoOv-yZMfoibCEw6EjqLgnpWvSrGEQmkcoAdaw');
 
-        console.log(tag1);
-        console.log(tag2);
-        console.log(tag3);
 
         if (head && head.length) {
             head[0].appendChild(tag1);
             head[0].appendChild(tag2);
             head[0].appendChild(tag3);
-            console.log(root.serialize(), '-----');
+ 
             res.setHeader("Content-Type", "text/html");
             res.send(root.serialize());
         } else {
